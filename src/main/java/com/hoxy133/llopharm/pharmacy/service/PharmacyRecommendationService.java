@@ -25,18 +25,15 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PharmacyRecommendationService {
 
-    // 길안내
-    private static final String DIRECTION_BASE_URL = "https://map.kakao.com/link/map/";
-
-    // 로드뷰
-    private static final String ROAD_VIEW_BASE_URL = "https://map.kakao.com/link/roadview/";
-
     private final KakaoAddressSearchService kakaoAddressSearchService;
     private final DirectionService directionService;
     private final Base62Service base62Service;
 
     @Value("${pharmacy.recommendation.base.url}")
     private String baseUrl;
+
+    @Value("${pharmacy.recommendation.road.url}")
+    private String roadUrl;
 
     public List<OutputDto> recommendPharmacyList(String address){
 
@@ -65,15 +62,11 @@ public class PharmacyRecommendationService {
     }
 
     private OutputDto convertToOutputDto(Direction direction){
-
-        // Road View URL
-        String sRoadViewUrl  = ROAD_VIEW_BASE_URL.concat(String.valueOf(direction.getTargetLatitude())).concat(",").concat(String.valueOf(direction.getTargetLongitude()));
-
         return OutputDto.builder()
                 .pharmacyName(direction.getTargetPharmacyName())
                 .pharmacyAddress(direction.getTargetAddress())
                 .directionUrl(baseUrl.concat(base62Service.encodeDirectionId(direction.getId())))
-                .roadViewUrl(sRoadViewUrl)
+                .roadViewUrl(roadUrl.concat(base62Service.encodeDirectionId(direction.getId())))
                 .distance(String.format("%.2f km", direction.getDistance()))
                 .build();
     }

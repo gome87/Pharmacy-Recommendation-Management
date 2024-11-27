@@ -26,4 +26,14 @@ public class DirectionController {
         return "redirect:" + result;
     }
 
+    @GetMapping("/road/{encodedId}")
+    public String searchRoadView(@PathVariable("encodedId") String encodedId) {
+
+        String result = directionService.findRoadViewUrlById(encodedId);
+
+        log.info("[DirectionController - searchRoadView] Road View url : {}", result);
+
+        return "redirect:" + result;
+    }
+
 }

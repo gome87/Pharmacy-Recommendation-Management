@@ -42,6 +42,8 @@ pharmacy:
   recommendation:
     base:
       url: http://localhost:8080/dir/
+    road:
+      url: http://localhost:8080/road/
 
 ---
 spring:

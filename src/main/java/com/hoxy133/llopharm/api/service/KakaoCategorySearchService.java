@@ -21,7 +21,7 @@ public class KakaoCategorySearchService {
     private final RestTemplate restTemplate;
     private final KakaoUriBuilderService kakaoUriBuilderService;
     
-    // 약구 카테고리
+    // 약국 카테고리
     private final String PHARMACY_CATEGORY = "PM9";
 
     @Value("${kakao.rest.api.key}")

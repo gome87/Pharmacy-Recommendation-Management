@@ -65,6 +65,17 @@ public class DirectionService {
         return sDirectionUrl;
     }
 
+    public String findRoadViewUrlById(String encodedId) {
+        Long decodedId = base62Service.decodeDirectionId(encodedId);
+        Direction direction = directionRepository.findById(decodedId).orElse(null);
+
+        String sRoadViewUrl = ROAD_VIEW_BASE_URL.concat(String.valueOf(direction.getTargetLatitude())).concat(",").concat(String.valueOf(direction.getTargetLongitude()));
+
+        log.info("[DirectionService - findRoadViewUrlById] Road View Url : {}", sRoadViewUrl);
+
+        return sRoadViewUrl;
+    }
+
     public List<Direction>  buildDirectionList(DocumentDto documentDto) {
 
         // 파라미터 null 체크
